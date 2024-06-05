@@ -1,4 +1,4 @@
-package com.example.webstore.config.security.infra.security;
+package com.example.webstore.config.infra.security;
 
 
 import com.example.webstore.model.User;
@@ -27,11 +27,16 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
-        var login = tokenService.validateToken(token);
+        var decodedJWT = tokenService.validateToken(token);
 
-        if(login != null){
-            User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        if (decodedJWT != null) {
+            String email = decodedJWT.getSubject();
+            Long userId = decodedJWT.getClaim("userId").asLong();
+            String role = decodedJWT.getClaim("role").asString();
+
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User Not Found"));
+
+            var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

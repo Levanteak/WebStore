@@ -1,25 +1,52 @@
-package com.example.webstore.entity;
+package com.example.webstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "user_id")
+    private Long userId;
+    @NotNull
     private String firstname;
+    @NotNull
     private String lastname;
-    String role;
-    String login;
-    String password;
+    @NotNull
+    private String role;
+    @NotNull
+    private String login;
+    @NotNull
+    private String password;
+    @NotNull
     private String email;
-    Date date;
 
+    @JsonIgnore
+    private LocalDateTime delete;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Basket> baskets;
+
+    @Column(name = "date_create", nullable = false, updatable = false)
+    @org.hibernate.annotations.CreationTimestamp
+    LocalDateTime date_create;
 }

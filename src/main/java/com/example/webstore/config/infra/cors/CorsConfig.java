@@ -1,4 +1,4 @@
-package com.example.webstore.config.security.infra.cors;
+package com.example.webstore.config.infra.cors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -1,4 +1,4 @@
-package com.example.webstore.config.security.infra.security;
+package com.example.webstore.config.infra.security;
 
 import com.example.webstore.model.User;
 import com.example.webstore.repository.UserRepository;

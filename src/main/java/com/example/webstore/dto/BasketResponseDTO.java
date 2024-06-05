@@ -1,17 +1,17 @@
-package com.example.webstore.response;
+package com.example.webstore.dto;
 
-import com.example.webstore.dto.ProductDTO;
-import com.example.webstore.model.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Schema(hidden = true)
 public class BasketResponseDTO {
     private Long basketId;
     private Long userId;
-    private Boolean bought;
+    private LocalDateTime bought;
     private Integer count;
     private Double total;
     private List<ProductDTO> products;

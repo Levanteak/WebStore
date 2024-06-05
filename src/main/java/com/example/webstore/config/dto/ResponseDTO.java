@@ -1,3 +1,3 @@
-package com.example.webstore.config.security.dto;
+package com.example.webstore.config.dto;
 
-public record ResponseDTO (String name, String token) { }
+public record ResponseDTO (String firstname, String token) { }
