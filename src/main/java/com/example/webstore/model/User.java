@@ -49,11 +49,15 @@ public class User {
     @org.hibernate.annotations.CreationTimestamp
     LocalDateTime date_create;
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    private List<Message> sentMessages;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    @JsonBackReference
+    private User sender;
 
-    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
-    private List<Message> receivedMessages;
+    @ManyToOne
+    @JoinColumn(name = "recipient_id")
+    @JsonBackReference
+    private User recipient;
 
 
 
