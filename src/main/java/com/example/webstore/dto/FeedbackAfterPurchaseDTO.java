@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Schema(hidden = true)
-public class FeedbackDTO {
+public class FeedbackAfterPurchaseDTO {
     private Long purchaseId;
     private String author;
     private String comment;

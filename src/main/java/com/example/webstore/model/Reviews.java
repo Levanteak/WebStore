@@ -4,17 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
-
 
 @Entity
 @Data
-@Table(name = "purchases")
-public class Purchase {
+@Table(name = "reviews")
+public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "purchase_id")
-    private Long purchaseId;
+    @Column(name = "feedback_id")
+    private Long feedbackId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -24,10 +22,12 @@ public class Purchase {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    private int count;
+    private String comment;
+    private int rating;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date purchaseDate;
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FeedbackAfterPurchase> feedbackAfterPurchases;
+    @Column(name = "feedback_date", nullable = false)
+    private Date feedbackDate;
+
+    private String author;
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @Schema(hidden = true)
-public class FeedbackConvertDTO {
+public class FeedbackAfterPurchaseConvertDTO {
     private Long feedbackId;
     private Long purchaseId;
     private ProductSummary product;

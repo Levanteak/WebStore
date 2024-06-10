@@ -1,11 +1,10 @@
 package com.example.webstore.service;
 
-import com.example.webstore.dto.FeedbackConvertDTO;
-import com.example.webstore.model.Feedback;
+import com.example.webstore.dto.FeedbackAfterPurchaseConvertDTO;
 import com.example.webstore.model.Purchase;
-import com.example.webstore.repository.FeedbackRepository;
+import com.example.webstore.repository.FeedbackAfterPurchase;
 import com.example.webstore.repository.PurchaseRepository;
-import com.example.webstore.service.Impl.ImplFeedbackService;
+import com.example.webstore.service.Impl.ImplFeedbackAfterPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,67 +13,67 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FeedbackService implements ImplFeedbackService {
+public class FeedbackService implements ImplFeedbackAfterPurchaseService {
 
     @Autowired
-    private FeedbackRepository feedbackRepository;
+    private FeedbackAfterPurchase feedbackAfterPurchase;
 
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-    public FeedbackConvertDTO addFeedback(FeedbackConvertDTO feedbackDTO) {
+    public FeedbackAfterPurchaseConvertDTO addFeedback(FeedbackAfterPurchaseConvertDTO feedbackDTO) {
         Purchase purchase = purchaseRepository.findById(feedbackDTO.getPurchaseId())
                 .orElseThrow(() -> new RuntimeException("Purchase not found"));
 
-        Feedback feedback = new Feedback();
-        feedback.setPurchase(purchase);
-        feedback.setUser(purchase.getUser());
-        feedback.setProduct(purchase.getProduct());
-        feedback.setAuthor(feedbackDTO.getAuthor());
-        feedback.setComment(feedbackDTO.getComment());
-        feedback.setRating(feedbackDTO.getRating());
-        feedback.setFeedbackDate(new Date());
+        com.example.webstore.model.FeedbackAfterPurchase feedbackAfterPurchase = new com.example.webstore.model.FeedbackAfterPurchase();
+        feedbackAfterPurchase.setPurchase(purchase);
+        feedbackAfterPurchase.setUser(purchase.getUser());
+        feedbackAfterPurchase.setProduct(purchase.getProduct());
+        feedbackAfterPurchase.setAuthor(feedbackDTO.getAuthor());
+        feedbackAfterPurchase.setComment(feedbackDTO.getComment());
+        feedbackAfterPurchase.setRating(feedbackDTO.getRating());
+        feedbackAfterPurchase.setFeedbackDate(new Date());
 
-        Feedback savedFeedback = feedbackRepository.save(feedback);
-        return convertToDTO(savedFeedback);
+        com.example.webstore.model.FeedbackAfterPurchase savedFeedbackAfterPurchase = this.feedbackAfterPurchase.save(feedbackAfterPurchase);
+        return convertToDTO(savedFeedbackAfterPurchase);
     }
 
-    public List<FeedbackConvertDTO> getAllFeedbacks() {
-        return feedbackRepository.findAll().stream()
+    public List<FeedbackAfterPurchaseConvertDTO> getAllFeedbacks() {
+        return feedbackAfterPurchase.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public FeedbackConvertDTO getFeedbackById(Long feedbackId) {
-        Feedback feedback = feedbackRepository.findById(feedbackId).orElse(null);
-        return feedback != null ? convertToDTO(feedback) : null;
+    public FeedbackAfterPurchaseConvertDTO getFeedbackById(Long feedbackId) {
+        com.example.webstore.model.FeedbackAfterPurchase feedbackAfterPurchase = this.feedbackAfterPurchase.findById(feedbackId).orElse(null);
+        return feedbackAfterPurchase != null ? convertToDTO(feedbackAfterPurchase) : null;
     }
 
     public void deleteFeedback(Long feedbackId) {
-        feedbackRepository.deleteById(feedbackId);
+        feedbackAfterPurchase.deleteById(feedbackId);
     }
 
-    private FeedbackConvertDTO convertToDTO(Feedback feedback) {
-        FeedbackConvertDTO feedbackDTO = new FeedbackConvertDTO();
-        feedbackDTO.setFeedbackId(feedback.getFeedbackId());
-        feedbackDTO.setPurchaseId(feedback.getPurchase().getPurchaseId());
+    private FeedbackAfterPurchaseConvertDTO convertToDTO(com.example.webstore.model.FeedbackAfterPurchase feedbackAfterPurchase) {
+        FeedbackAfterPurchaseConvertDTO feedbackDTO = new FeedbackAfterPurchaseConvertDTO();
+        feedbackDTO.setFeedbackId(feedbackAfterPurchase.getFeedbackId());
+        feedbackDTO.setPurchaseId(feedbackAfterPurchase.getPurchase().getPurchaseId());
 
-        FeedbackConvertDTO.ProductSummary productSummary = new FeedbackConvertDTO.ProductSummary();
-        productSummary.setProductId(feedback.getProduct().getProductId());
-        productSummary.setName(feedback.getProduct().getName());
-        productSummary.setDescription(feedback.getProduct().getDescription());
+        FeedbackAfterPurchaseConvertDTO.ProductSummary productSummary = new FeedbackAfterPurchaseConvertDTO.ProductSummary();
+        productSummary.setProductId(feedbackAfterPurchase.getProduct().getProductId());
+        productSummary.setName(feedbackAfterPurchase.getProduct().getName());
+        productSummary.setDescription(feedbackAfterPurchase.getProduct().getDescription());
         feedbackDTO.setProduct(productSummary);
 
-        FeedbackConvertDTO.UserSummary userSummary = new FeedbackConvertDTO.UserSummary();
-        userSummary.setUserId(feedback.getUser().getUserId());
-        userSummary.setLogin(feedback.getUser().getLogin());
-        userSummary.setEmail(feedback.getUser().getEmail());
+        FeedbackAfterPurchaseConvertDTO.UserSummary userSummary = new FeedbackAfterPurchaseConvertDTO.UserSummary();
+        userSummary.setUserId(feedbackAfterPurchase.getUser().getUserId());
+        userSummary.setLogin(feedbackAfterPurchase.getUser().getLogin());
+        userSummary.setEmail(feedbackAfterPurchase.getUser().getEmail());
         feedbackDTO.setUser(userSummary);
 
-        feedbackDTO.setAuthor(feedback.getAuthor());
-        feedbackDTO.setComment(feedback.getComment());
-        feedbackDTO.setRating(feedback.getRating());
-        feedbackDTO.setFeedbackDate(feedback.getFeedbackDate());
+        feedbackDTO.setAuthor(feedbackAfterPurchase.getAuthor());
+        feedbackDTO.setComment(feedbackAfterPurchase.getComment());
+        feedbackDTO.setRating(feedbackAfterPurchase.getRating());
+        feedbackDTO.setFeedbackDate(feedbackAfterPurchase.getFeedbackDate());
         return feedbackDTO;
     }
 }

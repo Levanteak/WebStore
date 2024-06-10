@@ -45,8 +45,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<Basket> baskets;
-
     @Column(name = "date_create", nullable = false, updatable = false)
     @org.hibernate.annotations.CreationTimestamp
     LocalDateTime date_create;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+    private List<Message> receivedMessages;
+
+
+
 }

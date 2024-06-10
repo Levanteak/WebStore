@@ -2,7 +2,6 @@ package com.example.webstore.controller;
 
 import com.example.webstore.exception.ProductNotFoundException;
 import com.example.webstore.model.Category;
-import com.example.webstore.model.Image;
 import com.example.webstore.model.Product;
 import com.example.webstore.model.User;
 import com.example.webstore.repository.CategoryRepository;

@@ -7,8 +7,8 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "feedbacks")
-public class Feedback {
+@Table(name = "feedback_after_purchase")
+public class FeedbackAfterPurchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feedback_id")

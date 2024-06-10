@@ -1,9 +1,7 @@
 package com.example.webstore.service.Impl;
 
-import com.example.webstore.model.Image;
 import com.example.webstore.model.Product;
 import com.example.webstore.response.ProductResponse;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

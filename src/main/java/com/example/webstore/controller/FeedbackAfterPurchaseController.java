@@ -1,6 +1,6 @@
 package com.example.webstore.controller;
 
-import com.example.webstore.dto.FeedbackConvertDTO;
+import com.example.webstore.dto.FeedbackAfterPurchaseConvertDTO;
 import com.example.webstore.service.FeedbackService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,27 +13,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/feedbacks")
 @CrossOrigin("http://localhost:3000")
-@Tag(name = "Feedback Controller", description = "API для управления отзывами")
-public class FeedbackController {
+@Tag(name = "FeedbackAfterPurchase Controller", description = "API для управления отзывами")
+public class FeedbackAfterPurchaseController {
 
     @Autowired
     private FeedbackService feedbackService;
 
     @PostMapping("/add")
-    public ResponseEntity<FeedbackConvertDTO> addFeedback(@RequestBody FeedbackConvertDTO feedbackDTO) {
-        FeedbackConvertDTO createdFeedback = feedbackService.addFeedback(feedbackDTO);
+    public ResponseEntity<FeedbackAfterPurchaseConvertDTO> addFeedback(@RequestBody FeedbackAfterPurchaseConvertDTO feedbackDTO) {
+        FeedbackAfterPurchaseConvertDTO createdFeedback = feedbackService.addFeedback(feedbackDTO);
         return new ResponseEntity<>(createdFeedback, HttpStatus.CREATED);
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<FeedbackConvertDTO>> getAllFeedbacks() {
-        List<FeedbackConvertDTO> feedbacks = feedbackService.getAllFeedbacks();
+    public ResponseEntity<List<FeedbackAfterPurchaseConvertDTO>> getAllFeedbacks() {
+        List<FeedbackAfterPurchaseConvertDTO> feedbacks = feedbackService.getAllFeedbacks();
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
     @GetMapping("/get/{feedbackId}")
-    public ResponseEntity<FeedbackConvertDTO> getFeedbackById(@PathVariable Long feedbackId) {
-        FeedbackConvertDTO feedback = feedbackService.getFeedbackById(feedbackId);
+    public ResponseEntity<FeedbackAfterPurchaseConvertDTO> getFeedbackById(@PathVariable Long feedbackId) {
+        FeedbackAfterPurchaseConvertDTO feedback = feedbackService.getFeedbackById(feedbackId);
         return feedback != null ? new ResponseEntity<>(feedback, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

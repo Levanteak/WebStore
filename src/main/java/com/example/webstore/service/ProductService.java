@@ -2,11 +2,9 @@ package com.example.webstore.service;
 
 import com.example.webstore.exception.ProductNotFoundException;
 import com.example.webstore.exception.ResourceNotFoundException;
-import com.example.webstore.model.Category;
 import com.example.webstore.model.Product;
 import com.example.webstore.model.User;
 import com.example.webstore.repository.CategoryRepository;
-import com.example.webstore.repository.ImageRepository;
 import com.example.webstore.repository.ProductRepository;
 import com.example.webstore.repository.UserRepository;
 import com.example.webstore.response.ProductResponse;
@@ -16,12 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,11 +28,8 @@ public class ProductService implements ImplProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-
-
-
     @Autowired
-    public ProductService(ProductRepository productRepository, UserRepository userRepository, ImageRepository imageRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
