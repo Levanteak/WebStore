@@ -1,13 +1,8 @@
 package com.example.webstore.controller;
 
 import com.example.webstore.dto.MessageDTO;
-import com.example.webstore.exception.NotFoundException;
-import com.example.webstore.model.User;
-import com.example.webstore.repository.UserRepository;
 import com.example.webstore.service.MessageService;
-import com.example.webstore.model.Message;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +18,14 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/sender/{senderId}/recipient/{recipientId}")
-    public ResponseEntity<List<MessageDTO>> getMessagesBetweenUsers(@PathVariable Long senderId, @PathVariable Long recipientId) {
+    @GetMapping("/sender/senderId/recipient/recipientId")
+    public ResponseEntity<List<MessageDTO>> getMessagesBetweenUsers(@RequestParam Long senderId, @RequestParam Long recipientId) {
         List<MessageDTO> messages = messageService.getMessagesBetweenUsers(senderId, recipientId);
         return ResponseEntity.ok(messages);
     }
 
-    @PostMapping("/sender/{senderId}/recipient/{recipientId}")
-    public ResponseEntity<MessageDTO> sendMessage(@PathVariable Long senderId, @PathVariable Long recipientId, @RequestBody String text) {
+    @PostMapping("/sender/senderId/recipient/recipientId")
+    public ResponseEntity<MessageDTO> sendMessage(@RequestParam Long senderId, @RequestParam Long recipientId, @RequestParam String text) {
         MessageDTO message = messageService.sendMessage(senderId, recipientId, text);
         return ResponseEntity.ok(message);
     }
