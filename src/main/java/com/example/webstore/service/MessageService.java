@@ -6,6 +6,7 @@ import com.example.webstore.repository.MessageRepository;
 import com.example.webstore.model.Message;
 
 import com.example.webstore.repository.UserRepository;
+import com.example.webstore.service.Impl.ImplMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MessageService {
+public class MessageService implements ImplMessageService {
     @Autowired
     private MessageRepository messageRepository;
 
@@ -49,6 +50,12 @@ public class MessageService {
         List<Message> messages = messageRepository.findByRecipientUserId(recipientId);
         return messages.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+    public List<MessageDTO> getFullConversationBetweenUsers(Long senderId, Long recipientId) {
+        List<Message> messages = messageRepository.findBySenderUserIdAndRecipientUserId(senderId, recipientId);
+        messages.addAll(messageRepository.findBySenderUserIdAndRecipientUserId(recipientId, senderId));
+        return messages.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
 
     private MessageDTO convertToDTO(Message message) {
         MessageDTO messageDTO = new MessageDTO();

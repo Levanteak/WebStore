@@ -18,7 +18,7 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/sender/senderId/recipient/recipientId")
+    @GetMapping("/sender/recipient")
     public ResponseEntity<List<MessageDTO>> getMessagesBetweenUsers(@RequestParam Long senderId, @RequestParam Long recipientId) {
         List<MessageDTO> messages = messageService.getMessagesBetweenUsers(senderId, recipientId);
         return ResponseEntity.ok(messages);
@@ -40,5 +40,11 @@ public class MessageController {
         List<MessageDTO> messages = messageService.getMessagesByRecipientId(recipientId);
         return ResponseEntity.ok(messages);
     }
+    @GetMapping("/between/users")
+    public ResponseEntity<List<MessageDTO>> getFullConversationBetweenUsers(@RequestParam Long senderId, @RequestParam Long recipientId) {
+        List<MessageDTO> messages = messageService.getFullConversationBetweenUsers(senderId, recipientId);
+        return ResponseEntity.ok(messages);
+    }
+
 }
 
